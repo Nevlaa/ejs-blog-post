@@ -1,0 +1,22 @@
+{
+  "name": "ejs-blog-with-database",
+  "version": "1.0.0",
+  "description": "blog post with mongoose and ejs",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Scott Horsburgh",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "ejs": "^2.6.1",
+    "express": "^4.16.3",
+    "lodash": "^4.17.20",
+    "mongoose": "^5.11.8"
+  },
+  "engines": {
+    "node": "14.15.1"
+  }
+}
