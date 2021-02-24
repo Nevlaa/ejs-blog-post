@@ -26,14 +26,11 @@ let db = {
   pass: process.env.PASSWORD,
   dbname: process.env.DBNAME,
 };
-
-mongoose.connect(
-  `mongodb+srv://${db.user}:${db.pass}@cluster0.c7iab.mongodb.net/${db.dbname}?retryWrites=true&w=majority`,
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  }
-);
+const MONGODB_URI = `mongodb+srv://${db.user}:${db.pass}@cluster0.c7iab.mongodb.net/${db.dbname}?retryWrites=true&w=majority`;
+mongoose.connect(MONGODB_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
 const postSchema = {
   title: String,
@@ -87,7 +84,7 @@ app.get("/contact", function (req, res) {
   res.render("contact", { contactContent: contactContent });
 });
 
-const port = process.env.PORT || 3000;
-app.listen(port, function () {
+let port = process.env.PORT || 3000;
+app.listen(port, () => {
   console.log(`Server started on ${port}`);
 });
