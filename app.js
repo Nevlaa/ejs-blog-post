@@ -27,7 +27,7 @@ let db = {
   dbname: process.env.DBNAME,
 };
 let MONGODB_URI = `mongodb+srv://${db.user}:${db.pass}@cluster0.c7iab.mongodb.net/${db.dbname}?retryWrites=true&w=majority`;
-console.log(MONGODB_URI);
+
 mongoose.connect(MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -40,13 +40,16 @@ const postSchema = {
 
 const Post = mongoose.model("Post", postSchema);
 
-app.get("/", (req, res) => {
-  Post.find({}, (posts) => {
-    res.render("home", {
-      startingContent: homeStartingContent,
-      posts: posts,
+app.get("/", async (req, res) => {
+  return Post.find({})
+    .exec()
+    .then((posts) => {
+      console.log(posts);
+      res.render("home", {
+        startingContent: homeStartingContent,
+        posts: posts,
+      });
     });
-  });
 });
 
 app.get("/compose", (req, res) => {
@@ -64,15 +67,16 @@ app.post("/compose", (req, res) => {
   });
 });
 
-app.get("/posts/:postId", (req, res) => {
+app.get("/posts/:postId", async (req, res) => {
   const requestedPostId = req.params.postId;
-
-  Post.findOne({ _id: requestedPostId }, (post) => {
-    res.render("post", {
-      title: post.title,
-      content: post.content,
+  return Post.findOne({ _id: requestedPostId })
+    .exec()
+    .then((post) => {
+      res.render("post", {
+        title: post.title,
+        content: post.content,
+      });
     });
-  });
 });
 
 app.get("/about", (req, res) => {

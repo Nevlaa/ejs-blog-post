@@ -2,8 +2,10 @@ html {
   min-height: 100%;
   position: relative;
 }
-
-.container-fluid {
+a{
+  text-decoration: none;
+}
+.container-body{
     padding-top: 70px;
     padding-bottom: 70px;
 }
@@ -16,7 +18,12 @@ html {
     font-size: 12px;
     letter-spacing: 5px;
 }
-.navbar-nav  li a:hover {
+
+.link-secondary{
+  font-size: 14px;
+}
+
+.link-secondary:hover {
     color: #1abc9c !important;
 }
 
