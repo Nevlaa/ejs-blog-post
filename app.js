@@ -26,7 +26,8 @@ let db = {
   pass: process.env.PASSWORD,
   dbname: process.env.DBNAME,
 };
-const MONGODB_URI = `mongodb+srv://${db.user}:${db.pass}@cluster0.c7iab.mongodb.net/${db.dbname}?retryWrites=true&w=majority`;
+let MONGODB_URI = `mongodb+srv://${db.user}:${db.pass}@cluster0.c7iab.mongodb.net/${db.dbname}?retryWrites=true&w=majority`;
+console.log(MONGODB_URI);
 mongoose.connect(MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -39,8 +40,8 @@ const postSchema = {
 
 const Post = mongoose.model("Post", postSchema);
 
-app.get("/", function (req, res) {
-  Post.find({}, function (err, posts) {
+app.get("/", (req, res) => {
+  Post.find({}, (posts) => {
     res.render("home", {
       startingContent: homeStartingContent,
       posts: posts,
@@ -48,27 +49,25 @@ app.get("/", function (req, res) {
   });
 });
 
-app.get("/compose", function (req, res) {
+app.get("/compose", (req, res) => {
   res.render("compose");
 });
 
-app.post("/compose", function (req, res) {
+app.post("/compose", (req, res) => {
   const post = new Post({
     title: req.body.postTitle,
     content: req.body.postBody,
   });
 
-  post.save(function (err) {
-    if (!err) {
-      res.redirect("/");
-    }
+  post.save(() => {
+    res.redirect("/");
   });
 });
 
-app.get("/posts/:postId", function (req, res) {
+app.get("/posts/:postId", (req, res) => {
   const requestedPostId = req.params.postId;
 
-  Post.findOne({ _id: requestedPostId }, function (err, post) {
+  Post.findOne({ _id: requestedPostId }, (post) => {
     res.render("post", {
       title: post.title,
       content: post.content,
@@ -76,11 +75,11 @@ app.get("/posts/:postId", function (req, res) {
   });
 });
 
-app.get("/about", function (req, res) {
+app.get("/about", (req, res) => {
   res.render("about", { aboutContent: aboutContent });
 });
 
-app.get("/contact", function (req, res) {
+app.get("/contact", (req, res) => {
   res.render("contact", { contactContent: contactContent });
 });
 
