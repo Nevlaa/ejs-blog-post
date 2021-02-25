@@ -49,6 +49,8 @@ app.get("/", async (req, res) => {
         startingContent: homeStartingContent,
         posts: posts,
       });
+    }).catch(err =>{
+      console.log(err);
     });
 });
 
@@ -76,6 +78,8 @@ app.get("/posts/:postId", async (req, res) => {
         title: post.title,
         content: post.content,
       });
+    }).catch(err =>{
+      console.log(err);
     });
 });
 
