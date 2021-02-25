@@ -25,10 +25,10 @@ let db = {
   user: process.env.USER,
   pass: process.env.PASSWORD,
   dbname: process.env.DBNAME,
+  uri:process.env.MONGODB_URI
 };
-// let MONGODB_URI = `mongodb+srv://${db.user}:${db.pass}@cluster0.c7iab.mongodb.net/${db.dbname}?retryWrites=true&w=majority`;
 
-mongoose.connect(MONGODB_URI, {
+mongoose.connect(db.uri, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
