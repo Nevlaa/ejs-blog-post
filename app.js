@@ -41,7 +41,7 @@ const postSchema = {
 const Post = mongoose.model("Post", postSchema);
 
 app.get("/", (req, res) => {
-  return Post.find({}),
+  Post.find({}),
     (posts) => {
       res.render("home", {
         startingContent: homeStartingContent,
@@ -65,32 +65,32 @@ app.post("/compose", (req, res) => {
   });
 });
 
-// app.get("/posts/:postId", (req, res) => {
-//   const requestedPostId = req.params.postId;
-//   return Post.findOne({ _id: requestedPostId },
-//     (post) => {
-//       console.log(post);
-//       res.render("post", {
-//         id: post.id,
-//         title: post.title,
-//         content: post.content,
-//       });
-//     })
-// });
+app.get("/posts/:postId", (req, res) => {
+  const requestedPostId = req.params.postId;
+  return Post.findOne({ _id: requestedPostId },
+    (post) => {
+      console.log(post);
+      res.render("post", {
+        id: post.id,
+        title: post.title,
+        content: post.content,
+      });
+    })
+});
 
-// app.get("/editPost/:postId", (req, res) => {
-//   const requestedPostId = req.params.postId;
-//   console.log(requestedPostId);
-//   return Post.findOne({ _id: requestedPostId },
-//     (post) => { 
-//       console.log(post);
-//          res.render("edit", {
-//            id: post.id,
-//         title: post.title,
-//         content: post.content,
-//       });
-//     })
-// });
+app.get("/editPost/:postId", (req, res) => {
+  const requestedPostId = req.params.postId;
+  console.log(requestedPostId);
+  return Post.findOne({ _id: requestedPostId },
+    (post) => { 
+      console.log(post);
+         res.render("edit", {
+           id: post.id,
+        title: post.title,
+        content: post.content,
+      });
+    })
+});
 
 // app.post("/editPost", (req, res) => {
 //   var updatePost= {
