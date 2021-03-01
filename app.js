@@ -65,59 +65,59 @@ app.post("/compose", (req, res) => {
   });
 });
 
-app.get("/posts/:postId", (req, res) => {
-  const requestedPostId = req.params.postId;
-  return Post.findOne({ _id: requestedPostId },
-    (post) => {
-      console.log(post);
-      res.render("post", {
-        id: post.id,
-        title: post.title,
-        content: post.content,
-      });
-    })
-});
+// app.get("/posts/:postId", (req, res) => {
+//   const requestedPostId = req.params.postId;
+//   return Post.findOne({ _id: requestedPostId },
+//     (post) => {
+//       console.log(post);
+//       res.render("post", {
+//         id: post.id,
+//         title: post.title,
+//         content: post.content,
+//       });
+//     })
+// });
 
-app.get("/editPost/:postId", (req, res) => {
-  const requestedPostId = req.params.postId;
-  console.log(requestedPostId);
-  return Post.findOne({ _id: requestedPostId },
-    (post) => { 
-      console.log(post);
-         res.render("edit", {
-           id: post.id,
-        title: post.title,
-        content: post.content,
-      });
-    })
-});
+// app.get("/editPost/:postId", (req, res) => {
+//   const requestedPostId = req.params.postId;
+//   console.log(requestedPostId);
+//   return Post.findOne({ _id: requestedPostId },
+//     (post) => { 
+//       console.log(post);
+//          res.render("edit", {
+//            id: post.id,
+//         title: post.title,
+//         content: post.content,
+//       });
+//     })
+// });
 
-app.post("/editpost", (req, res) => {
-  var updatePost= {
-    id: req.body.postId,
-    title: req.body.postTitleUpdate,
-    content: req.body.postBodyUpdate
-  }
-  console.log(updatePost);
-  Post.findByIdAndUpdate({ _id: requestedPostId }, updatePost,{new: true},
-     (err, post) => { 
-        if(err) res.send("error occured")
-      res.send(post)
-    })
-  res.redirect("/")
-});
+// app.post("/editPost", (req, res) => {
+//   var updatePost= {
+//     id: req.body.postId,
+//     title: req.body.postTitleUpdate,
+//     content: req.body.postBodyUpdate
+//   }
+//   console.log(updatePost);
+//   Post.findByIdAndUpdate({ _id: requestedPostId }, updatePost,{new: true},
+//      (err, post) => { 
+//         if(err) res.send("error occured")
+//       res.send(post)
+//     })
+//   res.redirect("/")
+// });
 
-app.delete("/:postId/delete", (req, res) =>{
-  const deletePostId = req.params.postId
-  Post.deleteOne({_id: deletePostId}, (err, post) => {
-    if(err){
-      console.log(err);
-    }else{
-      console.log("Post has been removed: ", post);
-      res.redirect("/")
-    }
-  })
-})
+// app.delete("/:postId/delete", (req, res) =>{
+//   const deletePostId = req.params.postId
+//   Post.deleteOne({_id: deletePostId}, (err, post) => {
+//     if(err){
+//       console.log(err);
+//     }else{
+//       console.log("Post has been removed: ", post);
+//       res.redirect("/")
+//     }
+//   })
+// })
 app.get("/about", (req, res) => {
   res.render("about", { aboutContent: aboutContent });
 });
