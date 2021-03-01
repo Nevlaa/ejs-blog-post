@@ -1,0 +1,15 @@
+<%- include("partials/header"); -%>
+    <h1>Update - <%=title %></h1>
+    <form class="form mt-4" action="/editPost/:postId"  method="GET">
+        <div class="form-group">
+            <label>Title</label>
+            <input type="hidden" name="postId" value="<%=id %>"/>
+            <input class="form-control mb-4" type="text" name="postTitleUpdate" value="<%=title %>"/>
+            <label>Post</label>
+            <textarea class="form-control" name="postBodyUpdate" rows="5" cols="30" ><%= content %></textarea>
+        </div>
+        <button class="btn btn-primary mt-4" type="submit" name="button">Update</button>
+        <button class="btn btn-danger mt-4 ms-2" type="button" name="button"><a href="/posts/<%=id%>" class="text-white">Back</a></button>
+    </form>
+
+    <%- include("partials/footer"); -%>

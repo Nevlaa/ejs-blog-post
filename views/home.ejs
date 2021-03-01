@@ -2,7 +2,11 @@
 
 <h1>Home</h1>
 <p class="pb-5"><%= startingContent %></p>
-
+<ul class="nav mx-auto mb-3">
+  <li class="nav-item active" aria-current="page" id="create">
+    <a class="nav-link link-success " href="/compose">Create post +</a>
+  </li>
+</ul>
 <% posts.forEach(function(post){ %>
 
 <h2><%=post.title%></h2>

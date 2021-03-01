@@ -13,12 +13,20 @@
     "body-parser": "^1.18.3",
     "dotenv": "^8.2.0",
     "ejs": "^2.6.1",
-    "express": "^4.16.3",
+    "express": "^4.17.1",
     "lodash": "^4.17.20",
     "mongodb": "^3.6.3",
     "mongoose": "^5.11.8"
   },
   "engines": {
     "node": "14.15.1"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nevlaa/ejs-blog-post.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Nevlaa/ejs-blog-post/issues"
+  },
+  "homepage": "https://github.com/Nevlaa/ejs-blog-post#readme"
 }

@@ -5,6 +5,17 @@
     <h1><%=title%></h1>
     <p><%=content%></p>
 
-<a href="/" class="nav-link link-secondary">Back to Home</a>
+    <ul class="nav mx-auto mb-3">
+        <li class="nav-item active" aria-current="page" id="back">
+        <a href="/" class="nav-link link-secondary">Back to Home</a>
+        </li>
+        <li class="nav-item active" aria-current="page" id="edit">
+            <a class="nav-link link-warning " href="/edit/<%=id%>">Edit</a>
+        </li>
+        <li class="nav-item active" aria-current="page" id="delete">
+            <a class="nav-link link-danger " href="/<%=id%>/delete">Delete - </a>
+        </li>
+    </ul>
+
 
 <%- include("partials/footer"); -%>
