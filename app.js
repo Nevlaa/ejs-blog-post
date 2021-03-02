@@ -66,7 +66,6 @@ app.post("/compose", (req, res) => {
 app.get("/posts/:postId", async (req, res) => {
   const requestedPostId = req.params.postId;
   Post.findOne({ _id: requestedPostId }).then((post) => {
-    console.log(post);
     res.render("post", {
       id: post.id,
       title: post.title,
@@ -82,7 +81,6 @@ app.post("/posts/:postId", (req, res) => {
 
 app.get("/update/:postId", async (req, res) => {
   const requestedPostId = req.params.postId;
-  console.log(requestedPostId);
   Post.findOne({ _id: requestedPostId }).then((post) => {
     res.render("update", {
       id: post.id,
