@@ -1,18 +1,24 @@
+
 <%- include("partials/header"); -%>
 
 <h1>Home</h1>
-<p class="pb-5"><%= startingContent %></p>
-<ul class="nav mx-auto mb-3">
+<p class="pb-3">
+  <%= startingContent %>
+</p>
+<ul class="nav mx-auto mb-4">
   <li class="nav-item active" aria-current="page" id="create">
     <a class="nav-link link-success " href="/compose">Create post +</a>
   </li>
 </ul>
 <% posts.forEach(function(post){ %>
 
-<h2><%=post.title%></h2>
-<p class="mb-4">
-  <%=post.content.substring(0, 100) + " ..."%>
-  <a class="text-primary" href="/posts/<%=post._id%>">Read More</a>
-</p>
+  <h4>
+    <%=post.title%>
+  </h4>
+  <p class="mb-5">
+    <%=post.content.substring(0, 110) + " ..." %>
+      <a class="text-primary" href="/posts/<%=post._id%>">Read More</a>
+  </p>
 
-<% }) %> <%- include("partials/footer"); -%>
+<% }) %>
+<%- include("partials/footer"); -%>

@@ -3,9 +3,9 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const ejs = require("ejs");
-const mongoose = require("mongoose");
-
 require("dotenv").config();
+const mongoose = require("mongoose");
+const Post = require("./models/posts");
 
 const homeStartingContent =
   "Lacus vel facilisis volutpat est velit egestas dui id ornare. Semper auctor neque vitae tempus quam. Sit amet cursus sit amet dictum sit amet justo. Viverra tellus in hac habitasse. Imperdiet proin fermentum leo vel orci porta. Donec ultrices tincidunt arcu non sodales neque sodales ut. Mattis molestie a iaculis at erat pellentesque adipiscing. Magnis dis parturient montes nascetur ridiculus mus mauris vitae ultricies. Adipiscing elit ut aliquam purus sit amet luctus venenatis lectus. Ultrices vitae auctor eu augue ut lectus arcu bibendum at. Odio euismod lacinia at quis risus sed vulputate odio ut. Cursus mattis molestie a iaculis at erat pellentesque adipiscing.";
@@ -25,29 +25,29 @@ let db = {
   user: process.env.USER,
   pass: process.env.PASSWORD,
   dbname: process.env.DBNAME,
-  uri:process.env.MONGODB_URI
+  uri: process.env.MONGODB_URI,
 };
 
-mongoose.connect(db.uri, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+mongoose
+  .connect(db.uri, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => {
+    console.log("Successfully connected to MongoDB Atlas!");
+  })
+  .catch((error) => {
+    console.log("Unable to connect to MongoDB Atlas!");
+    console.error(error);
+  });
 
-const postSchema = {
-  title: String,
-  content: String,
-};
-
-const Post = mongoose.model("Post", postSchema);
-
-app.get("/", (req, res) => {
-  Post.find({}),
-    (posts) => {
-      res.render("home", {
-        startingContent: homeStartingContent,
-        posts: posts,
-      });
-    }
+app.get("/", async (req, res) => {
+  Post.find({}).then((posts) => {
+    res.render("home", {
+      startingContent: homeStartingContent,
+      posts: posts,
+    });
+  });
 });
 
 app.get("/compose", (req, res) => {
@@ -59,65 +59,57 @@ app.post("/compose", (req, res) => {
     title: req.body.postTitle,
     content: req.body.postBody,
   });
+  post.save();
+  res.redirect("/");
+});
 
-  post.save(() => {
-    res.redirect("/");
+app.get("/posts/:postId", async (req, res) => {
+  const requestedPostId = req.params.postId;
+  Post.findOne({ _id: requestedPostId }).then((post) => {
+    console.log(post);
+    res.render("post", {
+      id: post.id,
+      title: post.title,
+      content: post.content,
+    });
   });
 });
 
-app.get("/posts/:postId", (req, res) => {
-  const requestedPostId = req.params.postId;
-  return Post.findOne({ _id: requestedPostId },
-    (post) => {
-      console.log(post);
-      res.render("post", {
-        id: post.id,
-        title: post.title,
-        content: post.content,
-      });
-    })
+app.post("/posts/:postId", (req, res) => {
+  const deletePost = Post.findOneAndDelete({ _id: req.params.postId });
+  deletePost.exec(() => res.redirect("/"));
 });
 
-app.get("/editPost/:postId", (req, res) => {
+app.get("/update/:postId", async (req, res) => {
   const requestedPostId = req.params.postId;
   console.log(requestedPostId);
-  return Post.findOne({ _id: requestedPostId },
-    (post) => { 
-      console.log(post);
-         res.render("edit", {
-           id: post.id,
-        title: post.title,
-        content: post.content,
-      });
-    })
+  Post.findOne({ _id: requestedPostId }).then((post) => {
+    res.render("update", {
+      id: post.id,
+      title: post.title,
+      content: post.content,
+    });
+  });
 });
 
-// app.post("/editPost", (req, res) => {
-//   var updatePost= {
-//     id: req.body.postId,
-//     title: req.body.postTitleUpdate,
-//     content: req.body.postBodyUpdate
-//   }
-//   console.log(updatePost);
-//   Post.findByIdAndUpdate({ _id: requestedPostId }, updatePost,{new: true},
-//      (err, post) => { 
-//         if(err) res.send("error occured")
-//       res.send(post)
-//     })
-//   res.redirect("/")
-// });
+app.post("/update/:postId", async (req, res) => {
+  const id = req.params.postId;
+  const updatePost = new Post({
+    _id: id,
+    title: req.body.postTitleUpdate,
+    content: req.body.postBodyUpdate,
+  });
+  const query = Post.updateOne(
+    { _id: id },
+    { $set: updatePost },
+    { new: true }
+  );
+  query.exec(() => {
+    res.redirect("/");
+  });
+  // query.getFilter()._id instanceof mongoose.Types.ObjectId;
+});
 
-// app.delete("/:postId/delete", (req, res) =>{
-//   const deletePostId = req.params.postId
-//   Post.deleteOne({_id: deletePostId}, (err, post) => {
-//     if(err){
-//       console.log(err);
-//     }else{
-//       console.log("Post has been removed: ", post);
-//       res.redirect("/")
-//     }
-//   })
-// })
 app.get("/about", (req, res) => {
   res.render("about", { aboutContent: aboutContent });
 });
