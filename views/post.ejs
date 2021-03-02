@@ -1,12 +1,12 @@
 
 <%- include("partials/header"); -%>
     <h1><%=title%></h1>
-    <p><%=content%></p>
-    <ul class="nav mx-auto mb-3">
+    <p class="mt-4"><%=content%></p>
+    <ul class="nav mx-auto pt-3">
         <form action="/posts/<%=id%>" method="post" class="mt-5">
-            <button class="btn btn-light"><a href="/" class="link-secondary">Back to Home</a></button>
-            <button class="btn btn-warning"><a class="link-light" href="/update/<%=id%>">Edit</a></button>
-            <button class="btn btn-danger" type="submit">Delete</button>
+            <a href="/" class="btn btn-outline-secondary me-3" role="button">Back Home</a>
+            <a class="btn btn-outline-warning  me-3" href="/update/<%=id%>" role="button">Edit</a>
+            <button type="submit" class="btn btn-outline-danger ms-3">Delete</button>
         </form>
     </ul>
 <%- include("partials/footer"); -%>

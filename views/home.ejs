@@ -2,12 +2,12 @@
 <%- include("partials/header"); -%>
 
 <h1>Home</h1>
-<p class="pb-3">
+<p class="py-4">
   <%= startingContent %>
 </p>
-<ul class="nav mx-auto mb-4">
+<ul class="nav mx-auto mb-5">
   <li class="nav-item active" aria-current="page" id="create">
-    <a class="nav-link link-success " href="/compose">Create post +</a>
+    <a class="btn btn-outline-success btn-sm p-2" role="button" href="/compose">Create post +</a>
   </li>
 </ul>
 <% posts.forEach(function(post){ %>
